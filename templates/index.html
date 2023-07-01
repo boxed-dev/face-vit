@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Face Detection</title>
+    <style>
+        #video-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div id="video-container">
+        <img id="video-stream" src="{{ url_for('video_feed') }}" alt="Video Stream" />
+    </div>
+
+    <script>
+        // Auto-refresh the video stream
+        setInterval(function() {
+            document.getElementById('video-stream').src = "{{ url_for('video_feed') }}";
+        }, 1000);
+    </script>
+</body>
+</html>
