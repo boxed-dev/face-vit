@@ -12,7 +12,7 @@ def index():
     return render_template('index.html')
 
 def detect_faces():
-    path = 'Images1'
+    path = 'Images'
     images = []
     classNames = []
     myList = os.listdir(path)
@@ -21,7 +21,7 @@ def detect_faces():
         images.append(curImg)
         classNames.append(os.path.splitext(cl)[0])
 
-    encoding_file = "EncodeFile1.p"
+    encoding_file = "EncodeFile.p"
     if os.path.exists(encoding_file):
         with open(encoding_file, 'rb') as file:
             encodeListKnown = pickle.load(file)
@@ -72,4 +72,4 @@ def video_feed():
     return Response(detect_faces(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)
