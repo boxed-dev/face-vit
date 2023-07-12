@@ -3,13 +3,7 @@ import numpy as np
 import face_recognition
 import pickle
 import os
-from flask import Flask, render_template, Response
-
-app = Flask(__name__)
-
-@app.route('/')
-def index():
-    return render_template('index.html')
+import streamlit as st
 
 def detect_faces():
     path = 'Images'
@@ -58,18 +52,14 @@ def detect_faces():
             text_y = y2 - 6
             cv2.putText(img, bestMatchName, (text_x, text_y), font, font_scale, (255, 255, 255), font_thickness)
 
-        _, jpeg = cv2.imencode('.jpg', img)
-        frame_data = jpeg.tobytes()
-
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame_data + b'\r\n\r\n')
+        st.image(img, channels="BGR")
 
     cap.release()
     cv2.destroyAllWindows()
 
-@app.route('/video_feed')
-def video_feed():
-    return Response(detect_faces(), mimetype='multipart/x-mixed-replace; boundary=frame')
+def main():
+    st.title('Face Detection')
+    detect_faces()
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    main()
