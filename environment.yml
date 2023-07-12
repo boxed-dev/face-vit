@@ -1,4 +1,4 @@
-name: streamlit-app
+name: app
 channels:
   - conda-forge
   - defaults
